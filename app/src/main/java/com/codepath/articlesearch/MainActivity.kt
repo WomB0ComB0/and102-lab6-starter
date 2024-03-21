@@ -1,20 +1,12 @@
 package com.codepath.articlesearch
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.codepath.articlesearch.databinding.ActivityMainBinding
-import com.codepath.asynchttpclient.AsyncHttpClient
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.serialization.json.Json
-import okhttp3.Headers
-import org.json.JSONException
 
 fun createJson() = Json {
     isLenient = true
@@ -34,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
+        replaceFragment(ArticleListFragment())
         val fragmentManager: FragmentManager = supportFragmentManager
 
         // define your fragments here
@@ -49,11 +43,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_books -> fragment = bestSellerBooksFragment
                 R.id.nav_articles -> fragment = articleListFragment
             }
-            replaceFragment(fragment)
+            fragmentManager.beginTransaction().replace(R.id.article_frame_layout, fragment).commit()
             true
         }
 
         // Set default selection
         bottomNavigationView.selectedItemId = R.id.nav_books
+    }
+    private fun replaceFragment(articleListFragment: ArticleListFragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.article_frame_layout, articleListFragment)
+        fragmentTransaction.commit()
     }
 }

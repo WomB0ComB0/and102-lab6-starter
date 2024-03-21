@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.model.Headers
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import org.json.JSONException
@@ -51,17 +50,17 @@ class ArticleListFragment : Fragment() {
 
     private fun fetchArticles() {
         val client = AsyncHttpClient()
-        client.get(ARTICLE_SEARCH_URL, object : JsonHttpResponseHandler() {
+        client[ARTICLE_SEARCH_URL, object : JsonHttpResponseHandler() {
             override fun onFailure(
                 statusCode: Int,
-                headers: Headers?,
+                headers: okhttp3.Headers?,
                 response: String?,
                 throwable: Throwable?
             ) {
                 Log.e(TAG, "Failed to fetch articles: $statusCode")
             }
 
-            override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
+            override fun onSuccess(statusCode: Int, headers: okhttp3.Headers, json: JSON) {
                 Log.i(TAG, "Successfully fetched articles: $json")
                 try {
                     val parsedJson = createJson().decodeFromString(
@@ -76,8 +75,7 @@ class ArticleListFragment : Fragment() {
                     Log.e(TAG, "Exception: $e")
                 }
             }
-
-        })
+        }]
     }
 
     companion object {

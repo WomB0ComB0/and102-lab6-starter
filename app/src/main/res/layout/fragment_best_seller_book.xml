@@ -21,7 +21,8 @@
         android:layout_height="150dp"
         app:layout_constraintTop_toTopOf="@+id/ranking"
         app:layout_constraintStart_toEndOf="@+id/ranking"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@android:drawable/ic_menu_gallery"
+        android:contentDescription="@string/book_image_description" />
 
     <TextView
         android:id="@+id/book_title"

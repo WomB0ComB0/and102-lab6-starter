@@ -1,6 +1,7 @@
 package com.codepath.articlesearch
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,9 +31,13 @@ class DetailActivity : AppCompatActivity() {
         bylineTextView.text = article.byline?.original
         abstractTextView.text = article.abstract
 
-        // Load the media image
-        Glide.with(this)
-            .load(article.mediaImageUrl)
-            .into(mediaImageView)
+        try {
+            // Load the media image
+            Glide.with(this)
+                .load(article.mediaImageUrl)
+                .into(mediaImageView)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading media image: ${e.message}", e)
+        }
     }
 }
